@@ -1,111 +1,301 @@
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+  * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-    body {
-      font-family: 'Segoe UI', Arial, sans-serif;
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-      color: #eee;
-      padding: 20px;
-    }
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #141e46, #1f2a68, #2d1b69);
+  color: #eee;
+  padding: 20px;
+  overflow: hidden;
+  position: relative;
+}
 
-    .game-card {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(233, 69, 96, 0.3);
-      border-radius: 20px;
-      padding: 40px 30px;
-      max-width: 420px;
-      width: 100%;
-      text-align: center;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-      transition: border-color 0.5s, box-shadow 0.5s;
-    }
+.floating-numbers {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
 
-    h1 {
-      color: #e94560;
-      font-size: 1.8rem;
-      margin-bottom: 8px;
-    }
+.floating-numbers span {
+  position: absolute;
+  bottom: -120px;
+  display: block;
+  color: rgba(255, 255, 255, 0.08);
+  font-size: 2rem;
+  font-weight: 700;
+  user-select: none;
+  text-shadow: 0 0 12px rgba(255, 255, 255, 0.08);
+  animation: subir 14s linear infinite;
+}
 
-    .subtitle {
-      color: #aaa;
-      margin-bottom: 24px;
-    }
+.floating-numbers span:nth-child(1) {
+  left: 8%;
+  font-size: 2.6rem;
+  animation-duration: 12s;
+}
 
-    .controls {
-      display: flex;
-      gap: 10px;
-      justify-content: center;
-      margin-bottom: 20px;
-    }
+.floating-numbers span:nth-child(2) {
+  left: 18%;
+  animation-duration: 16s;
+  animation-delay: 2s;
+}
 
-    input {
-      padding: 12px;
-      font-size: 18px;
-      width: 100px;
-      text-align: center;
-      border: 2px solid rgba(233, 69, 96, 0.4);
-      border-radius: 12px;
-      background: rgba(255, 255, 255, 0.05);
-      color: #eee;
-      outline: none;
-      transition: border-color 0.3s, box-shadow 0.3s;
-    }
-    input:focus {
-      border-color: #e94560;
-      box-shadow: 0 0 12px rgba(233, 69, 96, 0.3);
-    }
-    /* Ocultar flechas del input numérico */
-    input::-webkit-inner-spin-button,
-    input::-webkit-outer-spin-button { -webkit-appearance: none; }
-    input[type=number] { -moz-appearance: textfield; }
+.floating-numbers span:nth-child(3) {
+  left: 30%;
+  font-size: 3rem;
+  animation-duration: 11s;
+  animation-delay: 1s;
+}
 
-    button {
-      padding: 12px 24px;
-      font-size: 18px;
-      background-color: #e94560;
-      color: white;
-      border: none;
-      border-radius: 12px;
-      cursor: pointer;
-      transition: transform 0.2s, background-color 0.3s;
-    }
-    button:hover {
-      background-color: #d63d56;
-      transform: translateY(-2px);
-    }
-    button:active { transform: translateY(1px); }
-    button:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-      transform: none;
-    }
+.floating-numbers span:nth-child(4) {
+  left: 42%;
+  animation-duration: 18s;
+  animation-delay: 4s;
+}
 
-    #mensaje {
-      font-size: 24px;
-      margin: 20px 0;
-      min-height: 40px;
-      transition: font-size 0.3s;
-    }
+.floating-numbers span:nth-child(5) {
+  left: 55%;
+  font-size: 2.2rem;
+  animation-duration: 13s;
+  animation-delay: 3s;
+}
 
-    #historial {
-      margin-top: 20px;
-      font-size: 14px;
-      color: #aaa;
-    }
+.floating-numbers span:nth-child(6) {
+  left: 67%;
+  animation-duration: 17s;
+  animation-delay: 5s;
+}
 
-    #btnReiniciar {
-      background-color: #0f3460;
-      margin-top: 12px;
-    }
+.floating-numbers span:nth-child(7) {
+  left: 78%;
+  font-size: 2.8rem;
+  animation-duration: 10s;
+  animation-delay: 2s;
+}
 
-    @media (max-width: 480px) {
-      .game-card { padding: 30px 20px; }
-      .controls { flex-direction: column; align-items: center; }
-      input { width: 80%; }
-      button { width: 80%; }
-    }
+.floating-numbers span:nth-child(8) {
+  left: 86%;
+  animation-duration: 15s;
+  animation-delay: 6s;
+}
+
+.floating-numbers span:nth-child(9) {
+  left: 92%;
+  font-size: 3.2rem;
+  animation-duration: 14s;
+  animation-delay: 1s;
+}
+
+.floating-numbers span:nth-child(10) {
+  left: 50%;
+  animation-duration: 19s;
+  animation-delay: 7s;
+}
+
+.game-card {
+  position: relative;
+  z-index: 1;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(233, 69, 96, 0.3);
+  border-radius: 20px;
+  padding: 40px 30px;
+  max-width: 420px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(10px);
+  transition: border-color 0.5s, box-shadow 0.5s, transform 0.3s;
+}
+
+.game-card:hover {
+  transform: translateY(-2px);
+}
+
+h1 {
+  color: #e94560;
+  font-size: 1.8rem;
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  color: #cfcfcf;
+  margin-bottom: 24px;
+}
+
+.controls {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+input {
+  padding: 12px;
+  font-size: 18px;
+  width: 100px;
+  text-align: center;
+  border: 2px solid rgba(233, 69, 96, 0.4);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  color: #eee;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+input:focus-visible {
+  border-color: #e94560;
+  box-shadow: 0 0 0 3px rgba(233, 69, 96, 0.25);
+  outline: 2px solid transparent;
+}
+
+input::placeholder {
+  color: #bbb;
+}
+
+input::-webkit-inner-spin-button,
+input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+button {
+  padding: 12px 24px;
+  font-size: 18px;
+  background-color: #e94560;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform 0.2s, background-color 0.3s, opacity 0.3s, box-shadow 0.3s;
+}
+
+button:hover {
+  background-color: #d63d56;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(233, 69, 96, 0.3);
+}
+
+button:active {
+  transform: translateY(1px);
+}
+
+button:focus-visible {
+  outline: 3px solid rgba(255, 255, 255, 0.9);
+  outline-offset: 3px;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+#mensaje {
+  font-size: 24px;
+  margin: 20px 0;
+  min-height: 40px;
+}
+
+#contador,
+#historial,
+#puntaje,
+#record {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #d7d7d7;
+}
+
+#btnReiniciar {
+  background: linear-gradient(135deg, #ff512f, #dd2476);
+  margin-top: 14px;
+  box-shadow: 0 6px 18px rgba(221, 36, 118, 0.35);
+}
+
+#btnReiniciar:hover {
+  background: linear-gradient(135deg, #ff6a3d, #e7368a);
+  box-shadow: 0 10px 22px rgba(221, 36, 118, 0.45);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@keyframes subir {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(-120vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .game-card {
+    padding: 30px 20px;
+  }
+
+  .controls {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  input,
+  button {
+    width: 80%;
+  }
+
+  .floating-numbers span {
+    font-size: 1.8rem !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .floating-numbers span,
+  .game-card,
+  button,
+  input {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .game-card:hover,
+  button:hover,
+  button:active {
+    transform: none;
+  }
+
+  .floating-numbers span {
+    opacity: 0.12;
+  }
+}
  

@@ -6,69 +6,128 @@ const btnAdivinar = document.getElementById('btnAdivinar');
 const mensaje = document.getElementById('mensaje');
 const contador = document.getElementById('contador');
 const historial = document.getElementById('historial');
+const puntajeTexto = document.getElementById('puntaje');
+const recordTexto = document.getElementById('record');
 const btnReiniciar = document.getElementById('btnReiniciar');
 const tarjeta = document.getElementById('game-card');
+const gameForm = document.getElementById('gameForm');
 
-// --- Variables del juego ---
-let numeroSecreto = Math.floor(Math.random() * 100) + 1;
+let numeroSecreto = generarNumeroSecreto();
 let intentos = 0;
 let historialIntentos = [];
+let puntaje = 100;
+let recordPersonal = 0;
 
-console.log('(DEBUG) Número secreto:', numeroSecreto);
-// console.log('Elementos conectados:', inputIntento, btnAdivinar, mensaje);
+function generarNumeroSecreto() {
+  return Math.floor(Math.random() * 100) + 1;
+}
 
-
-
-// --- Tu primera función ---
 function mostrarMensaje(texto, color) {
   mensaje.textContent = texto;
   mensaje.style.color = color;
 }
 
-// Prueba la función
-mostrarMensaje('¡Bienvenido al juego!', '#e94560');
+function actualizarPuntaje() {
+  puntajeTexto.textContent = 'Puntaje: ' + puntaje;
+}
 
+function obtenerPista(diferencia) {
+  if (diferencia <= 5) {
+    return 'Estás cerca.';
+  } else if (diferencia <= 10) {
+    return 'Vas bien.';
+  } else {
+    return 'Estás lejos.';
+  }
+}
 
-
-// --- Función principal ---
 function verificarIntento() {
-  let valor = Number(inputIntento.value);
+  const valor = Number(inputIntento.value);
 
-  // Validar entrada
   if (isNaN(valor) || valor < 1 || valor > 100) {
-    mostrarMensaje('⚠️ Ingresa un número del 1 al 100', 'orange');
+    mostrarMensaje('⚠️ Ingresa un número válido del 1 al 100', 'orange');
+    inputIntento.focus();
     return;
   }
-  // Incrementar contador
+
+  if (historialIntentos.includes(valor)) {
+    mostrarMensaje('⚠️ Ya intentaste ese número. Prueba otro.', 'orange');
+    inputIntento.value = '';
+    inputIntento.focus();
+    return;
+  }
+
   intentos++;
   contador.textContent = 'Intentos: ' + intentos;
-  // Agregar al historial
+
   historialIntentos.push(valor);
   historial.textContent = 'Historial: ' + historialIntentos.join(', ');
-  // Comparar con el número secreto
+
+  const diferencia = Math.abs(valor - numeroSecreto);
+
   if (valor === numeroSecreto) {
     mostrarMensaje('🎉 ¡Correcto! Era el ' + numeroSecreto, '#00ff88');
     btnAdivinar.disabled = true;
     btnReiniciar.style.display = 'inline-block';
-    // Celebración visual: la tarjeta brilla verde
+
     tarjeta.style.borderColor = '#00ff88';
     tarjeta.style.boxShadow = '0 0 40px rgba(0, 255, 136, 0.3)';
-  } else if (valor > numeroSecreto) {
-    mostrarMensaje('📈 Muy alto. Intenta más bajo.', '#ff6b6b');
+
+    if (puntaje > recordPersonal) {
+      recordPersonal = puntaje;
+      recordTexto.textContent = 'Récord personal: ' + recordPersonal;
+    }
   } else {
-    mostrarMensaje('📉 Muy bajo. Intenta más alto.', '#4ecdc4');
+    puntaje = Math.max(0, puntaje - 10);
+    actualizarPuntaje();
+
+    if (valor > numeroSecreto) {
+      mostrarMensaje('📈 Muy alto. ' + obtenerPista(diferencia), '#ff6b6b');
+    } else {
+      mostrarMensaje('📉 Muy bajo. ' + obtenerPista(diferencia), '#4ecdc4');
+    }
   }
- // Limpiar input y enfocar
+
   inputIntento.value = '';
   inputIntento.focus();
 }
 
-// --- Conectar eventos ---
-btnAdivinar.addEventListener('click', verificarIntento);
+function reiniciarJuego() {
+  numeroSecreto = generarNumeroSecreto();
+  console.log('Nuevo número secreto:', numeroSecreto);
 
+  intentos = 0;
+  historialIntentos = [];
+  puntaje = 100;
 
+  contador.textContent = 'Intentos: 0';
+  historial.textContent = 'Historial:';
+  actualizarPuntaje();
+  mostrarMensaje('🎯 ¡Nuevo juego! Adivina el número...', '#e94560');
 
+  btnAdivinar.disabled = false;
+  btnReiniciar.style.display = 'none';
+  inputIntento.value = '';
+  inputIntento.focus();
 
+  tarjeta.style.borderColor = 'rgba(233, 69, 96, 0.3)';
+  tarjeta.style.boxShadow = '0 8px 32px rgba(0, 0, 0, 0.4)';
+}
+
+mostrarMensaje('¡Bienvenido al juego!', '#e94560');
+actualizarPuntaje();
+recordTexto.textContent = 'Récord personal: ' + recordPersonal;
+
+if (gameForm) {
+  gameForm.addEventListener('submit', function (evento) {
+    evento.preventDefault();
+    verificarIntento();
+  });
+} else {
+  btnAdivinar.addEventListener('click', verificarIntento);
+}
+
+btnReiniciar.addEventListener('click', reiniciarJuego);
 
 
 
