@@ -38,6 +38,14 @@ body {
   animation: subir 14s linear infinite;
 }
 
+.floating-numbers span:nth-child(3n) {
+  color: rgba(255, 105, 180, 0.09);
+}
+
+.floating-numbers span:nth-child(4n) {
+  color: rgba(78, 205, 196, 0.09);
+}
+
 .floating-numbers span:nth-child(1) {
   left: 8%;
   font-size: 2.6rem;
@@ -104,17 +112,17 @@ body {
 
 .game-card {
   position: relative;
-  z-index: 1;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(233, 69, 96, 0.3);
-  border-radius: 20px;
-  padding: 40px 30px;
-  max-width: 420px;
-  width: 100%;
+  z-index: 2;
+  width: min(92vw, 560px);
+  padding: 52px 38px;
+  border-radius: 22px;
   text-align: center;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+  background: rgba(27, 36, 89, 0.82);
   backdrop-filter: blur(10px);
-  transition: border-color 0.5s, box-shadow 0.5s, transform 0.3s;
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.38);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .game-card:hover {
@@ -123,26 +131,28 @@ body {
 
 h1 {
   color: #e94560;
-  font-size: 1.8rem;
-  margin-bottom: 8px;
+  font-size: 2.2rem;
+  margin-bottom: 10px;
 }
 
 .subtitle {
   color: #cfcfcf;
-  margin-bottom: 24px;
+  margin-bottom: 28px;
+  font-size: 1rem;
 }
 
 .controls {
   display: flex;
-  gap: 10px;
+  gap: 14px;
   justify-content: center;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
+  width: 100%;
 }
 
 input {
-  padding: 12px;
-  font-size: 18px;
-  width: 100px;
+  padding: 14px 16px;
+  font-size: 20px;
+  width: 140px;
   text-align: center;
   border: 2px solid rgba(233, 69, 96, 0.4);
   border-radius: 12px;
@@ -172,7 +182,7 @@ input[type="number"] {
 }
 
 button {
-  padding: 12px 24px;
+  padding: 14px 24px;
   font-size: 18px;
   background-color: #e94560;
   color: white;
@@ -205,23 +215,23 @@ button:disabled {
 }
 
 #mensaje {
-  font-size: 24px;
-  margin: 20px 0;
-  min-height: 40px;
+  font-size: 26px;
+  margin: 24px 0;
+  min-height: 44px;
 }
 
 #contador,
 #historial,
 #puntaje,
 #record {
-  margin-top: 10px;
-  font-size: 14px;
+  margin-top: 12px;
+  font-size: 15px;
   color: #d7d7d7;
 }
 
 #btnReiniciar {
   background: linear-gradient(135deg, #ff512f, #dd2476);
-  margin-top: 14px;
+  margin-top: 18px;
   box-shadow: 0 6px 18px rgba(221, 36, 118, 0.35);
 }
 
@@ -261,17 +271,22 @@ button:disabled {
 
 @media (max-width: 480px) {
   .game-card {
-    padding: 30px 20px;
+    width: 94%;
+    padding: 34px 22px;
+  }
+
+  h1 {
+    font-size: 1.8rem;
   }
 
   .controls {
     flex-direction: column;
-    align-items: center;
+    align-items: stretch;
   }
 
   input,
   button {
-    width: 80%;
+    width: 100%;
   }
 
   .floating-numbers span {
@@ -298,4 +313,3 @@ button:disabled {
     opacity: 0.12;
   }
 }
- 

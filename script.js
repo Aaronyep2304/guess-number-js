@@ -1,6 +1,4 @@
-// === ADIVINA EL NÚMERO - Versión DOM ===
 
-// --- Seleccionar elementos del HTML ---
 const inputIntento = document.getElementById('inputIntento');
 const btnAdivinar = document.getElementById('btnAdivinar');
 const mensaje = document.getElementById('mensaje');
